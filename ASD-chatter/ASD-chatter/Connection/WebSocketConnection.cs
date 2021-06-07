@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using WebSocketSharp;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ASD_chatter.Connection
 {
     public class WebSocketConnection
     {
         private WebSocket socket;
-        private ListBox listBoxref;
-        public WebSocketConnection(ListBox box)
+        private BindingList<string> adapterRef;
+        public WebSocketConnection(BindingList<string> adapter)
         {
-            listBoxref = box;
+            adapterRef = adapter;
             //Configure websocket
             socket = new WebSocket("ws://127.0.0.1:8080");
 
@@ -26,7 +27,7 @@ namespace ASD_chatter.Connection
         public void Socket_OnMessage(object sender, MessageEventArgs e)
         {
             string message = JsonConvert.DeserializeObject<string>(e.Data);
-            listBoxref.Items.Add(message);
+            adapterRef.Add(message);
         }
 
         public string Connect() 

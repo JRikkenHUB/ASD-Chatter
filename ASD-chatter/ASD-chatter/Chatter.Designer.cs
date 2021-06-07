@@ -71,7 +71,7 @@ namespace ASD_chatter
             this.txtMessageBox.Size = new System.Drawing.Size(475, 27);
             this.txtMessageBox.TabIndex = 4;
             // 
-            // Form1
+            // Chatter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -80,7 +80,7 @@ namespace ASD_chatter
             this.Controls.Add(this.ltbChatLog);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnSend);
-            this.Name = "Form1";
+            this.Name = "Chatter";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

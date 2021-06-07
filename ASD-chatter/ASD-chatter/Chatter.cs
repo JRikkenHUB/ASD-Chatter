@@ -15,15 +15,18 @@ namespace ASD_chatter
     public partial class Chatter : Form
     {
         WebSocketConnection connection;
+        BindingList<string> chatLog;
         public Chatter()
         {
             InitializeComponent();
-            connection = new WebSocketConnection(this.ltbChatLog);
+            chatLog = new BindingList<string>();
+            ltbChatLog.DataSource = chatLog;
+            connection = new WebSocketConnection(chatLog);
         }
 
         private void send_Click(object sender, EventArgs e)
         {
-            ltbChatLog.Items.Add(txtMessageBox.Text);
+            AddToChatLog(txtMessageBox.Text);
             connection.SendMessage(txtMessageBox.Text);
 
             txtMessageBox.Clear();
@@ -38,7 +41,7 @@ namespace ASD_chatter
 
         public void AddToChatLog(string message) 
         {
-            ltbChatLog.Items.Add(message);
+            chatLog.Add(message);
         }
     }
 }

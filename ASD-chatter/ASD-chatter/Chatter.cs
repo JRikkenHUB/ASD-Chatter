@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ASD_chatter.Connection;
+using ASD_chatter.DTO;
 using WebSocketSharp;
 
 namespace ASD_chatter
@@ -16,18 +17,32 @@ namespace ASD_chatter
     {
         WebSocketConnection connection;
         BindingList<string> chatLog;
+        string Username;
         public Chatter()
         {
             InitializeComponent();
+            GetUsername();
             chatLog = new BindingList<string>();
             ltbChatLog.DataSource = chatLog;
             connection = new WebSocketConnection(chatLog);
         }
 
+        public void GetUsername() 
+        {
+            UsernameDialog usernameDialog = new UsernameDialog();
+
+            if (usernameDialog.ShowDialog(this) == DialogResult.OK) 
+            {
+                Username = usernameDialog.UsernameText;
+
+            }
+            usernameDialog.Dispose();
+        }
+
         private void send_Click(object sender, EventArgs e)
         {
-            AddToChatLog(txtMessageBox.Text);
-            connection.SendMessage(txtMessageBox.Text);
+            AddToChatLog($"{Username}: {txtMessageBox.Text}");
+            connection.SendMessage(new MessageDTO(Username, txtMessageBox.Text));
 
             txtMessageBox.Clear();
         }

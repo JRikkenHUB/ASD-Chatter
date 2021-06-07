@@ -7,6 +7,7 @@ using WebSocketSharp;
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using System.ComponentModel;
+using ASD_chatter.DTO;
 
 namespace ASD_chatter.Connection
 {
@@ -26,8 +27,8 @@ namespace ASD_chatter.Connection
 
         public void Socket_OnMessage(object sender, MessageEventArgs e)
         {
-            string message = JsonConvert.DeserializeObject<string>(e.Data);
-            adapterRef.Add(message);
+            MessageDTO message = JsonConvert.DeserializeObject<MessageDTO>(e.Data);
+            adapterRef.Add($"{message.SenderInfo}: {message.MessageInfo}");
         }
 
         public string Connect() 
@@ -35,7 +36,7 @@ namespace ASD_chatter.Connection
             try
             {
                 socket.Connect();
-                return "Succes";
+                return "Succesfully connected :)";
             }
             catch (Exception e)
             {
@@ -43,11 +44,11 @@ namespace ASD_chatter.Connection
             }
         }
 
-        public void SendMessage(string message) 
+        public void SendMessage(MessageDTO messageDTO) 
         {
             try
             {
-                var jsonMessage = JsonConvert.SerializeObject(message);
+                var jsonMessage = JsonConvert.SerializeObject(messageDTO);
                 socket.Send(jsonMessage);
             }
             catch (Exception)

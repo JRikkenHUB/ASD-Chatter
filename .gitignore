@@ -15,6 +15,7 @@ obj/
 # Common node modules locations
 /node_modules
 /wwwroot/node_modules
+/ASD-chatter/ASD-chatter/switch
 
 ### Linux ###
 *~
